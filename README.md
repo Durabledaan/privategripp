@@ -30,6 +30,43 @@ De output bevat alle kolommen uit het relatiesbestand plus aanvullende kolommen:
 Gebruik `--accepted-status` om extra offerte-statussen toe te voegen die als
 geaccordeerd tellen.
 
+### Snelstart (alleen API)
+
+1. **Installeer afhankelijkheden**
+
+   ```bash
+   python -m pip install -r requirements.txt
+   ```
+
+2. **Zet je API-token klaar**
+
+   ```bash
+   export GRIPP_API_TOKEN="plak_hier_je_token"
+   ```
+
+3. **Doorloop de wizard** – deze haalt voorbeelden op en stelt kolomnamen
+   voor. Kies `j` om de export te starten wanneer de samenvatting klopt.
+
+   ```bash
+   python export_relations_with_sales.py --output relaties_met_sales.csv --wizard \
+     --offers-filter status=Geaccordeerd --assignments-filter status=Actief
+   ```
+
+4. **Draai de export opnieuw zonder wizard (optioneel)** voor een volledig
+   geautomatiseerde run, bijvoorbeeld in een cronjob of workflow.
+
+   ```bash
+   python export_relations_with_sales.py --output relaties_met_sales.csv \
+     --relations-id-field id --offer-relation-field relation_id --offer-id-field id \
+     --offer-status-field status --assignment-relation-field relation_id \
+     --assignment-id-field id --offers-filter status=Geaccordeerd \
+     --assignments-filter status=Actief
+   ```
+
+   Het bestand `relaties_met_sales.csv` verschijnt in dezelfde map als het
+   script en bevat alleen relaties die zowel een geaccordeerde offerte als een
+   opdracht hebben.
+
 ### API-modus
 
 1. Vraag in Gripp een API-token aan (Beheer → Instellingen → API). Sla dit op in
@@ -101,11 +138,11 @@ scripted uitvoeren.*
 
 ### Afhankelijkheden
 
-Het script gebruikt alleen standaardbibliotheken plus `requests`. Installeer
-het pakket indien nodig:
+Het script gebruikt alleen standaardbibliotheken plus `requests`. Installeer de
+benodigde packages bij voorkeur via `requirements.txt`:
 
 ```bash
-python -m pip install requests
+python -m pip install -r requirements.txt
 ```
 
 ### Problemen oplossen
